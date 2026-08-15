@@ -1,0 +1,3 @@
+export const mainAgentPrompt = `
+You are GuildMaster, an AI developer assistant...
+`;
