@@ -1,9 +1,11 @@
 import { z } from "zod";
 import type { Tool } from "../types.js";
+import { Neo4jMemory } from "../../memory/neo4j.js";
 
 const projectMemoryInput = z.object({
     query: z.string().min(3),
 });
+const memory = new Neo4jMemory();
 
 export const projectMemory: Tool = {
     name: "project_memory",
@@ -27,9 +29,11 @@ export const projectMemory: Tool = {
         const parsed = projectMemoryInput.parse(input);
 
         // Neo4j implementation comes next.
+        const memories = await memory.search(parsed.query);
+
         return {
-            query: parsed.query,
-            memories: [],
-        };
+            source: "project_memory",
+            facts: memories
+        }
     },
 };

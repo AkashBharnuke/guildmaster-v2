@@ -28,16 +28,34 @@ export const githubRepo: Tool = {
     },
 
     async execute(input: unknown) {
-        const parsed = githubRepoInput.parse(input);
+        const { owner, repository } = githubRepoInput.parse(input);
 
         // GitHub API implementation comes next.
+        const response = await fetch(
+            `https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repository)}`,
+            {
+                headers: {
+                    Accept: "application/vnd.github+json",
+                }
+            }
+        );
+
+        if(!response.ok) {
+            const errorBody = await response.text();
+            throw new Error(`GitHub API failed: ${response.status} ${response.statusText} - ${errorBody}`);
+        }
+
+        const data = await response.json();
+
+
         return {
-            owner: parsed.owner,
-            repository: parsed.repository,
-            description: "",
-            language: "",
-            stars: 0,
-            forks: 0,
+            owner: data.owner?.login,
+            repository: data.name,
+            description: data.description,
+            language: data.language,
+            stars: data.stargazers_count,
+            forks: data.forks_count,
+            url: data.html_url
         };
     },
 };
