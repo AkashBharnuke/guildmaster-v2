@@ -42,11 +42,16 @@ export class Neo4jMemory implements MemoryStore {
       const result = await session.run(
         `
             MATCH (subject:Entity)-[r:RELATED]->(object:Entity)
-            WHERE any(term IN $terms
-                WHERE toLower(subject.name) CONTAINS term)
-            RETURN subject.name AS subject,
-                   r.type AS relationship,
-                   object.name AS object
+            WHERE any(term IN $terms WHERE
+              toLower(subject.name) CONTAINS term OR
+              toLower(object.name) CONTAINS term OR
+              toLower(r.type) CONTAINS term
+            )
+            RETURN
+                subject.name AS subject,
+                r.type AS relationship,
+                object.name AS object
+            LIMIT 10
             `,
         { terms }
       );

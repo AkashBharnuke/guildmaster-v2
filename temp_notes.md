@@ -10,7 +10,7 @@ Phase 2 — Memory & Multi-Agent
 P2-T1 — Sessions & Conversation Memory
 P2-T2 — Neo4j Graph Memory
 P2-T3 — Memory Extraction
-P2-T4 — Agent Handoffs [CURR]
+P2-T4 — Agent Handoffs 
 P2-T5 — Structured Outputs
 
 
@@ -19,7 +19,7 @@ P3-T1 — Memory Background Worker
 P3-T2 — Context Retrieval Worker
 P3-T3 — Guardrails & Tool Approval
 P3-T4 — Streaming & Runtime Events
-P3-T5 — Retries, Timeouts & Execution Tracing
+P3-T5 — Retries, Timeouts & Execution Tracing [CURR]
 
 
 Phase 4 — SDK & Hackathon Packaging

@@ -58,4 +58,5 @@ export const githubRepo: Tool = {
             url: data.html_url
         };
     },
+    approval: "approval_required",
 };
