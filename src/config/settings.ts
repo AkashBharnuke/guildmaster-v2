@@ -11,6 +11,15 @@ class Settings {
     readonly llmTopP = Number(process.env.LLM_TOP_P ?? 1);
 
     readonly agentMaxIterations = Number(process.env.AGENT_MAX_ITERATIONS ?? 10);    
+
+    readonly neo4jUri = process.env.NEO4J_URI ?? "bolt://localhost:7687";
+    readonly neo4jUsername = process.env.NEO4J_USERNAME ?? "neo4j";
+    readonly neo4jPassword = process.env.NEO4J_PASSWORD ?? "";
+
+    readonly searchApiKey = process.env.SEARCH_API_KEY ?? "";
+    readonly searchApiEndpoint = process.env.SEARCH_API_ENDPOINT ?? "";
+
+
 }
 
 

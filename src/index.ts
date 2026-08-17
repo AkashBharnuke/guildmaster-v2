@@ -1,23 +1,28 @@
-import { Agent } from "./agent/agent.js";
-import { mainAgentPrompt } from "./prompts/main-agent.js";
-import { llm } from "./providers/groq.js";
-import { githubRepo } from "./tools/tools/github-repo.js";
-import { projectMemory } from "./tools/tools/project-memory.js";
-import { searchWeb } from "./tools/tools/search-web.js";
+// src/index.ts
 
-const agent = new Agent({
-    name: "GuildMaster",
-    instructions: mainAgentPrompt,
-    model: llm,
-    tools: [
-        searchWeb,
-        githubRepo,
-        projectMemory,
-    ],
-});
+export { Agent } from "./agent/agent.js";
 
-const result = await agent.run(
-    "Search for information about the GuildMaster project."
-);
+export type { AgentConfig, Session } from "./agent/types.js";
 
-console.log(result);
+export { getSession } from "./agent/session.js";
+
+export type { AgentEvent } from "./agent/events.js";
+
+export type { Tool } from "./tools/types.js";
+
+export type {
+  LLMProvider,
+  ChatMessage,
+  LLMResponse,
+  ResponseFormat,
+} from "./providers/types.js";
+
+export { Neo4jMemory } from "./memory/neo4j.js";
+
+export { MemoryWorker, ContextRetrievalWorker } from "./memory/worker.js";
+
+export type { Memory } from "./memory/types.js";
+
+export { createTool } from "./tools/create-tool.js";
+
+export { llm, OpenAICompatibleProvider } from "./providers/openai-compatible.js";
