@@ -1,5 +1,5 @@
 import { Agent, getSession } from "../src/index.js";
-import { llm } from "../src/providers/groq.js";
+import { llm } from "../src/providers/openai-compatible.js";
 import { searchWeb } from "../src/tools/tools/search-web.js";
 
 const agent = new Agent({

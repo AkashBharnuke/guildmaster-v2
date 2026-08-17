@@ -25,4 +25,4 @@ export type { Memory } from "./memory/types.js";
 
 export { createTool } from "./tools/create-tool.js";
 
-
+export { llm, OpenAICompatibleProvider } from "./providers/openai-compatible.js";

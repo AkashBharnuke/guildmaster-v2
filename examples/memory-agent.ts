@@ -1,6 +1,6 @@
 import { Agent } from "../src/agent/agent.js";
 import { mainAgentPrompt } from "../src/prompts/main-agent.js";
-import { llm } from "../src/providers/groq.js";
+import { llm } from "../src/providers/openai-compatible.js";
 import { Neo4jMemory } from "../src/memory/neo4j.js";
 import { getSession } from "../src/agent/session.js";
 import {

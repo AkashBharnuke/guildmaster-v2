@@ -1,7 +1,7 @@
 import { Agent } from "../src/agent/agent.js";
 import { mainAgentPrompt } from "../src/prompts/main-agent.js";
 import { researchAgentPrompt } from "../src/prompts/research-agent.js";
-import { llm } from "../src/providers/groq.js";
+import { llm } from "../src/providers/openai-compatible.js";
 import { getSession } from "../src/agent/session.js";
 import { githubRepo } from "../src/tools/tools/github-repo.js";
 import { searchWeb } from "../src/tools/tools/search-web.js";

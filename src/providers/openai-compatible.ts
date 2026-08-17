@@ -2,7 +2,7 @@ import { OpenAI } from "openai";
 import { settings } from "../config/settings.js";
 import type { ChatMessage, LLMResponse, LLMProvider, ResponseFormat } from "./types.js";
 
-class GroqProvider implements LLMProvider {
+export class OpenAICompatibleProvider implements LLMProvider {
   private client: OpenAI;
 
   constructor() {
@@ -115,4 +115,4 @@ class GroqProvider implements LLMProvider {
   }
 }
 
-export const llm = new GroqProvider();
+export const llm = new OpenAICompatibleProvider();
