@@ -1,8 +1,19 @@
 {
   "name": "guildmaster",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.1.1",
+  "private": false,
   "type": "module",
+  "main": ".dist/index.js",
+  "types": "/dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
   "directories": {
     "doc": "docs"
   },
@@ -18,6 +29,7 @@
   "dependencies": {
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
+    "neo4j-driver": "^6.2.0",
     "openai": "^7.4.0",
     "zod": "^4.4.3"
   },
@@ -28,7 +40,7 @@
     "typescript": "^5.9.2"
   },
   "keywords": [],
-  "author": "",
+  "author": "Akash Bharnuke",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/AkashBharnuke/guildmaster-v2/issues"

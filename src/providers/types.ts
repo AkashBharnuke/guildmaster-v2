@@ -11,11 +11,20 @@ export interface LLMResponse {
 }
 
 export interface LLMProvider {
-    chat(messages: ChatMessage[], tools?: unknown[]): Promise<LLMResponse>
+    chat(messages: ChatMessage[], tools?: unknown[], responseFormat?: ResponseFormat): Promise<LLMResponse>
 }
 
 export interface ToolCall {
   id: string;
   name: string;
   arguments: string;
+}
+
+export interface ResponseFormat {
+    type: "json_schema";
+    json_schema: {
+        name: string;
+        schema: Record<string, unknown>;
+        strict?: boolean;
+    };
 }

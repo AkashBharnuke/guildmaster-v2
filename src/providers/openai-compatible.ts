@@ -1,8 +1,8 @@
 import { OpenAI } from "openai";
 import { settings } from "../config/settings.js";
-import type { ChatMessage, LLMResponse, LLMProvider } from "./types.js";
+import type { ChatMessage, LLMResponse, LLMProvider, ResponseFormat } from "./types.js";
 
-class GroqProvider implements LLMProvider {
+export class OpenAICompatibleProvider implements LLMProvider {
   private client: OpenAI;
 
   constructor() {
@@ -12,7 +12,7 @@ class GroqProvider implements LLMProvider {
     });
   }
 
-  async chat(messages: ChatMessage[], tools?: unknown[]): Promise<LLMResponse> {
+  async chat(messages: ChatMessage[], tools?: unknown[], responseFormat?: ResponseFormat): Promise<LLMResponse> {
     const openAIMessages = messages.map((message) => {
       switch (message.role) {
         case "system":
@@ -52,14 +52,37 @@ class GroqProvider implements LLMProvider {
       }
     });
 
+    const groqResponseFormat:
+  | OpenAI.Chat.Completions.ChatCompletionCreateParams["response_format"]
+  | undefined = responseFormat
+    ? {
+        type: "json_schema",
+        json_schema: {
+          name: responseFormat.json_schema.name,
+          schema: responseFormat.json_schema.schema,
+          strict: responseFormat.json_schema.strict ?? true,
+        },
+      }
+    : undefined;
+
+
+    // console.log("RESPONSE FORMAT:", JSON.stringify(groqResponseFormat, null, 2));
+    // console.log("TOOLS:", tools?.length);
+
     const response = await this.client.chat.completions.create({
       model: settings.llmModel,
       temperature: settings.llmTemperature,
       top_p: settings.llmTopP,
       max_completion_tokens: settings.llmMaxTokens,
       messages: openAIMessages,
-      tools: tools as OpenAI.Chat.Completions.ChatCompletionTool[],
+      ...(tools && tools.length > 0 && {
+        tools: tools as OpenAI.Chat.Completions.ChatCompletionTool[],
+        tool_choice: "auto" as const,
+    }),
+      ...(groqResponseFormat && { response_format: groqResponseFormat})
     });
+
+    // console.log("RAW LLM RESPONSE:", JSON.stringify(response, null, 2));
 
     const message = response.choices[0]?.message;
 
@@ -92,4 +115,4 @@ class GroqProvider implements LLMProvider {
   }
 }
 
-export const llm = new GroqProvider();
+export const llm = new OpenAICompatibleProvider();
